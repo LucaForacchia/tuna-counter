@@ -5,8 +5,28 @@ Passi piccoli, uno per sessione. Ogni passo è "fatto" solo quando passano
 con Expo Go.
 
 **Stato attuale**: passi 0-7 fatti e testati sul telefono; passo 8 (Storico —
-Grafico) implementato, in attesa di conferma sul telefono. Prossimo passo: 9
-(Impostazioni — Export/Import CSV).
+Grafico) implementato (commit su `master`), **in attesa di conferma sul
+telefono**.
+
+**Per continuare domani**:
+1. Prima cosa: prova il passo 8 sul telefono (ricarica l'app da Expo Go) e
+   verifica la checklist qui sotto. Se qualcosa non torna, dillo prima di
+   passare oltre.
+   - La card del grafico sopra "Change log" mostra: valore corrente grande +
+     "today", "min X · max Y" a destra, linea a gradini con riempimento,
+     etichette data sotto.
+   - I tre tab **30 days / 1 year / All** cambiano il grafico in modo
+     coerente (es. "All" copre tutta la storia, "30 days" solo l'ultimo
+     mese).
+   - Dopo un Consuma o un Aggiungi/Togli, tornando su Storico il grafico e il
+     "today" si aggiornano.
+   - Nessun crash tornando sulla tab con finestra stretta o con pochi/nessun
+     evento.
+2. Se il passo 8 è confermato, segna anche questa riga "FATTO" e si passa al
+   **passo 9** (Impostazioni — Export/Import CSV, vedi sotto).
+3. Nulla di pendente nel repo: ogni passo fin qui è stato committato
+   direttamente su `master` (nessun branch feature aperto, nessun remote
+   configurato).
 
 ## 0. Setup progetto — FATTO
 Progetto Expo (SDK 57, TypeScript strict, Expo Router) creato, `app.json`
