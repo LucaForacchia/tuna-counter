@@ -5,10 +5,10 @@ import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useEvents } from '@/db/useEvents';
-import type { ReplayedEvent } from '@/domain/replay';
 import { generateEventId } from '@/domain/id';
 import { currentCount, replay } from '@/domain/replay';
 import { validateNewEvent } from '@/domain/validate';
+import { formatDeltaLabel } from '@/ui/formatDelta';
 import { formatRelativeDayTime } from '@/ui/formatRelativeDayTime';
 import { fontFamilies } from '@/ui/fonts';
 import { MinusIcon } from '@/ui/icons/MinusIcon';
@@ -17,11 +17,6 @@ import { SettingsIcon } from '@/ui/icons/SettingsIcon';
 import { Snackbar } from '@/ui/Snackbar';
 import { useThemeColors } from '@/ui/theme';
 import { spacing } from '@/ui/tokens';
-
-function formatDeltaLabel(event: Pick<ReplayedEvent, 'type' | 'value'>): string {
-  if (event.type === 'set') return `= ${event.value}`;
-  return event.value >= 0 ? `+${event.value}` : `${event.value}`;
-}
 
 /** Shown once, when the DB has no events yet — creates the only `set` event the UI normally generates. */
 function FirstRunSetup({ onDone }: { onDone: (initialCount: number) => void }) {

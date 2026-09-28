@@ -4,8 +4,9 @@ Passi piccoli, uno per sessione. Ogni passo è "fatto" solo quando passano
 `npx tsc --noEmit` e `npx jest`, e quando indicato è stato provato sul telefono
 con Expo Go.
 
-**Stato attuale**: passi 0-6 fatti e testati sul telefono. Prossimo passo: 7
-(Storico — Log).
+**Stato attuale**: passi 0-6 fatti e testati sul telefono; passo 7 (Storico —
+Log) implementato, in attesa di conferma sul telefono. Prossimo passo: 8
+(Storico — Grafico).
 
 ## 0. Setup progetto — FATTO
 Progetto Expo (SDK 57, TypeScript strict, Expo Router) creato, `app.json`
