@@ -43,7 +43,9 @@ export default function TabsLayout() {
     <Tabs>
       <TabSlot />
       <TabList asChild>
-        <View style={[styles.tabBar, { backgroundColor: colors.surface, borderTopColor: colors.outline, paddingBottom: insets.bottom + 8 }]}>
+        <View
+          style={StyleSheet.flatten([styles.tabBar, { backgroundColor: colors.surface, borderTopColor: colors.outline, paddingBottom: insets.bottom + 8 }])}
+        >
           <TabTrigger name="pantry" href="/" asChild>
             <TabButton label="Pantry" Icon={PantryIcon} />
           </TabTrigger>
