@@ -4,9 +4,9 @@ Passi piccoli, uno per sessione. Ogni passo è "fatto" solo quando passano
 `npx tsc --noEmit` e `npx jest`, e quando indicato è stato provato sul telefono
 con Expo Go.
 
-**Stato attuale**: passi 0-6 fatti e testati sul telefono; passo 7 (Storico —
-Log) implementato, in attesa di conferma sul telefono. Prossimo passo: 8
-(Storico — Grafico).
+**Stato attuale**: passi 0-7 fatti e testati sul telefono; passo 8 (Storico —
+Grafico) implementato, in attesa di conferma sul telefono. Prossimo passo: 9
+(Impostazioni — Export/Import CSV).
 
 ## 0. Setup progetto — FATTO
 Progetto Expo (SDK 57, TypeScript strict, Expo Router) creato, `app.json`
@@ -137,8 +137,12 @@ visive comuni prima di costruire qualunque schermata.
 
 ## 8. Storico — Grafico
 - Grafico a gradini del conteggio nel tempo, selettore intervallo
-  7gg / 30gg / 1 anno / tutto, usando la serie calcolata dal dominio (passo
+  30gg / 1 anno / tutto, usando la serie calcolata dal dominio (passo
   1/2, regola di costruzione in `docs/spec.md` §3.3).
+- **Nota**: la spec citava inizialmente anche "7 giorni" come intervallo, ma
+  sia il mockup sia `design/screenshots/03-history.png` mostrano solo 3 tab
+  (30 giorni / 1 anno / Tutto). Deciso con l'utente: si seguono i mockup, "7
+  giorni" tolto da `docs/spec.md` §3.3.
 - Il mockup (`design/mockups/03-history.html`) disegna il grafico come SVG
   scritto a mano: un path a gradini con comandi H/V, riempimento
   `accentSoft` al 60% fino alla baseline, griglia tratteggiata `outlineSoft`,

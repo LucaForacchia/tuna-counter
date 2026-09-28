@@ -64,7 +64,8 @@ Ogni evento nel log mostra anche il **valore risultante** dopo di esso.
 ### 3.3 Storico
 Due viste, con un selettore in alto:
 - **Grafico**: grafico a gradini (step line) del conteggio nel tempo.
-  Intervalli: 7 giorni / 30 giorni / 1 anno / tutto.
+  Intervalli: 30 giorni / 1 anno / tutto (come nei mockup/screenshot; niente
+  "7 giorni", deciso con l'utente al passo 8).
   Costruzione della serie per un intervallo `[inizio, adesso]`: il valore a
   `inizio` è l'ultimo totale risultante prima di `inizio` (0 se non esiste);
   poi uno scalino per ogni evento dentro l'intervallo, fino ad "adesso" con
