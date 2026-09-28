@@ -4,11 +4,14 @@ Passi piccoli, uno per sessione. Ogni passo è "fatto" solo quando passano
 `npx tsc --noEmit` e `npx jest`, e quando indicato è stato provato sul telefono
 con Expo Go.
 
+**Stato attuale**: passi 0-6 fatti e testati sul telefono. Prossimo passo: 7
+(Storico — Log).
+
 ## 0. Setup progetto — FATTO
 Progetto Expo (SDK 57, TypeScript strict, Expo Router) creato, `app.json`
 configurato, Jest con test banale, primo commit.
 
-## 1. Dominio: modello eventi e replay
+## 1. Dominio: modello eventi e replay — FATTO
 - Tipi TypeScript per l'evento (`delta` / `set`), validazione base (occurred_at
   non nel futuro, value intero).
 - Funzione di replay: dalla lista di eventi ordinati calcola il conteggio
@@ -20,7 +23,7 @@ configurato, Jest con test banale, primo commit.
 - **Fatto quando**: test unitari verdi per replay base, evento nel passato,
   blocco del negativo.
 
-## 2. Dominio: CSV (parse/serialize)
+## 2. Dominio: CSV (parse/serialize) — FATTO
 - Serializzazione eventi → CSV (RFC 4180, intestazioni in inglese, nome file
   con data).
 - Parsing CSV → eventi, con gestione righe malformate (riportate come errori,
@@ -31,7 +34,7 @@ configurato, Jest con test banale, primo commit.
   righe malformate ignorate con report corretto.
 - **Fatto quando**: tutti i test CSV in `docs/spec.md` §4 passano.
 
-## 3. Database SQLite
+## 3. Database SQLite — FATTO
 - Schema iniziale tabella `events` in `src/db`, wrapper tipizzato per
   insert/select/delete.
 - Sistema di migrazioni versionate (tabella `schema_version` o simile),
@@ -41,7 +44,7 @@ configurato, Jest con test banale, primo commit.
 - **Fatto quando**: i test di migrazione passano e il replay dal dominio
   produce lo stesso risultato leggendo dati veri dal DB.
 
-## 4. Sistema di design (font, colori, icone)
+## 4. Sistema di design (font, colori, icone) — FATTO
 I mockup in `design/` e le specifiche in `docs/design.md` sono arrivati dopo
 la stesura iniziale di questo piano: questo passo prepara le fondamenta
 visive comuni prima di costruire qualunque schermata.
@@ -54,10 +57,10 @@ visive comuni prima di costruire qualunque schermata.
   di `docs/design.md` (background, surface, ink, accent, ecc.), esposto via
   context/hook React, non il `CompositionLocal` di Compose citato nel
   documento originale (è terminologia Android nativo, non applicabile qui).
-- **Punto aperto**: `docs/design.md` definisce solo la palette **chiara**. La
-  palette scura va decisa in questo passo (nuovi valori, o una regola di
-  derivazione provvisoria) perché CLAUDE.md richiede supporto automatico al
-  tema scuro: senza, il passo non si può considerare concluso.
+- **Punto aperto (ancora da chiudere)**: `docs/design.md` definisce solo la
+  palette chiara. La palette scura in `src/ui/colors.ts` è provvisoria
+  (derivata a mano, marcata `PROVISIONAL` nel codice), non un mockup reale —
+  da rivedere se/quando arriveranno mockup del tema scuro.
 - `npx expo install react-native-svg`: serve già qui per le icone del bottone
   Home (Consuma, Modifica, ingranaggio Impostazioni), non solo per il
   grafico dello Storico (passo 8). Le icone dei mockup sono stroke SVG stile
@@ -70,7 +73,7 @@ visive comuni prima di costruire qualunque schermata.
   testo di prova mostra Bricolage Grotesque e Figtree ai pesi giusti, in
   tema chiaro e scuro, senza flash del font di fallback.
 
-## 5. Home ("Pantry")
+## 5. Home ("Pantry") — FATTO
 - Schermo Home: numero corrente grande (calcolato via replay dagli eventi in
   DB), "ultima modifica: ...", pulsante **Consuma** (−1) con feedback aptico,
   toast/snackbar **Annulla** (~5s) che elimina l'evento appena creato.
@@ -95,7 +98,7 @@ visive comuni prima di costruire qualunque schermata.
   nel reset (passo 9) — il Pannello Modifica resta Aggiungi/Togli come nel
   mockup. Vedi `docs/spec.md` §3.1/§3.4 aggiornate.
 
-## 6. Pannello Modifica
+## 6. Pannello Modifica — FATTO
 - **Primo avvio**: se il DB non ha ancora eventi, Home mostra un piccolo
   setup ("Quante scatolette hai ora?") che crea l'unico evento `set`
   generato dall'interfaccia normale, invece di partire silenziosamente da 0.
