@@ -59,6 +59,11 @@ Ogni evento nel log mostra anche il **valore risultante** dopo di esso.
 Due viste, con un selettore in alto:
 - **Grafico**: grafico a gradini (step line) del conteggio nel tempo.
   Intervalli: 7 giorni / 30 giorni / 1 anno / tutto.
+  Costruzione della serie per un intervallo `[inizio, adesso]`: il valore a
+  `inizio` è l'ultimo totale risultante prima di `inizio` (0 se non esiste);
+  poi uno scalino per ogni evento dentro l'intervallo, fino ad "adesso" con
+  il conteggio corrente. Minimo e massimo dell'asse si calcolano su questa
+  serie, incluso il valore iniziale.
 - **Log**: lista in ordine cronologico inverso. Ogni riga: data/ora, variazione
   ("−1", "+6", "= 9"), valore risultante, nota. Eventi inseriti nel passato
   hanno un piccolo indicatore. Swipe o tocco lungo → elimina (con conferma).
@@ -87,6 +92,12 @@ id,occurred_at,recorded_at,type,value,note
   dalla lingua dell'interfaccia, così un backup è leggibile da qualsiasi versione.
 - Prima riga opzionale di versione del formato per il futuro: se si cambia il
   formato, l'import deve continuare a leggere i backup vecchi.
+- In import, accettare anche `;` come separatore di campo (intestazione
+  `id;occurred_at;recorded_at;type;value;note`): Excel in italiano spesso
+  risalva i CSV in questo modo.
+- In import, rimuovere un eventuale BOM UTF-8 dal file prima del parsing.
+- Un file vuoto o con la sola intestazione è un import valido ("0 eventi"):
+  va comunque mostrato il riepilogo di conferma, non trattato come errore.
 - Requisito: **export → import deve restituire esattamente gli stessi dati**
   (test automatico dedicato).
 

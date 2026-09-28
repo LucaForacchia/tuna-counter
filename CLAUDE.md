@@ -4,7 +4,7 @@ Questo file va nella radice del repository. Claude Code lo legge a ogni sessione
 
 ## Contesto
 - Tuna Counter: app **Android** per contare le scatolette di tonno. Destinata alla **pubblicazione su Google Play**, quindi va trattata come prodotto vero, non come prototipo.
-- Specifica completa in `SPEC.md`: leggila prima di modificare funzionalità. Checklist di pubblicazione in `PLAY-STORE.md`.
+- Specifica completa in `docs/spec.md`: leggila prima di modificare funzionalità. Checklist di pubblicazione in `docs/play-store.md`. Design system (colori, font, layout) in `docs/design.md`.
 - Lo sviluppatore (Luca) ha una laurea in matematica ma **non ha mai sviluppato app mobile**. Spiega brevemente le scelte non ovvie di React Native/Expo/Android, senza dilungarti su ciò che è semplice programmazione.
 - Rispondi in italiano. Codice, nomi di variabili e commit vanno in inglese. Testi dell'interfaccia in file di traduzione (it + en).
 
@@ -20,7 +20,7 @@ Questo file va nella radice del repository. Claude Code lo legge a ogni sessione
 - Navigazione: Expo Router.
 - Persistenza: `expo-sqlite`, con migrazioni versionate.
 - Export: `expo-file-system` + `expo-sharing`. Import: `expo-document-picker`.
-- Grafico: libreria basata su `react-native-svg` compatibile con Expo Go (es. `react-native-gifted-charts`).
+- Grafico: disegnato a mano con `react-native-svg` (`Path`/`Line`/`Circle`), niente libreria di grafici esterna.
 - i18n: `expo-localization` + una libreria leggera di traduzioni (es. `i18next`/`react-i18next`).
 - Test: Jest (`jest-expo`) per la logica di dominio.
 - Installa le dipendenze con `npx expo install <pkg>` (non `npm install`), così le versioni restano allineate alla SDK.
@@ -52,7 +52,7 @@ app/        # schermate (Expo Router)
 - Nessun permesso Android: rimuovi quelli aggiunti di default che non servono.
 
 ## Modo di lavorare
-- Procedi per **passi piccoli**, uno per sessione, seguendo `PLAN.md`.
+- Procedi per **passi piccoli**, uno per sessione, seguendo `docs/plan.md`.
 - Prima di dichiarare finito un passo, devono passare `npx tsc --noEmit` e `npx jest`.
 - Non aggiungere dipendenze non elencate sopra senza chiedere.
 - Fai commit piccoli e descrittivi dopo ogni passo funzionante.

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tuna Counter — Backup</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&amp;family=Figtree:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:'Figtree',sans-serif;background:#F4EFE6;color:#1B2B38}
+a{color:#1B2B38;text-decoration:none}a:hover{color:#B8452F}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #F4EFE6; display: flex; flex-direction: column; font-family: 'Figtree', sans-serif; color: #1B2B38">
+<header style="padding: 44px 24px 12px 24px; display: flex; flex-direction: column; gap: 2px">
+<h1 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.5px">Backup</h1>
+<div style="font-size: 14px; color: #5A6670">Export or restore your data as CSV</div>
+</header>
+
+<div style="flex-grow: 1; display: flex; flex-direction: column; gap: 16px; padding: 4px 24px 16px 24px">
+<div style="background: #FFFFFF; border: 1px solid #E2DACB; border-radius: 18px; padding: 18px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; gap: 14px; align-items: flex-start">
+<span style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 12px; background: #F1D9CF; color: #8E3322; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M7 10l5 5 5-5"></path><path d="M12 15V3"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 style="margin: 0; font-size: 17px; font-weight: 700">Export CSV</h2>
+<div style="font-size: 14px; color: #5A6670">Save the count and full change log to a file (Drive, Downloads…)</div>
+</div>
+</div>
+<button style="height: 52px; border-radius: 26px; border: none; background: #B8452F; color: #FFFFFF; font-size: 16px; font-weight: 700">Export now</button>
+<div style="font-size: 13px; color: #5A6670">Last backup: [LAST EXPORT DATE]</div>
+</div>
+
+<div style="background: #FFFFFF; border: 1px solid #E2DACB; border-radius: 18px; padding: 18px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; gap: 14px; align-items: flex-start">
+<span style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 12px; background: #E6ECF1; color: #1F4A6B; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M17 8l-5-5-5 5"></path><path d="M12 3v12"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 style="margin: 0; font-size: 17px; font-weight: 700">Import CSV</h2>
+<div style="font-size: 14px; color: #5A6670">Restore from a backup. Replaces current data after you confirm.</div>
+</div>
+</div>
+<button style="height: 52px; border-radius: 26px; border: 1.5px solid #1B2B38; background: #FFFFFF; color: #1B2B38; font-size: 16px; font-weight: 700">Choose file…</button>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="font-size: 14px; font-weight: 700">File format</div>
+<pre style="margin: 0; background: #1B2B38; color: #F4EFE6; border-radius: 14px; padding: 14px; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.6; white-space: pre">timestamp,delta,total,note
+2026-09-24T18:02,+7,12,"Weekly groceries"
+2026-09-27T20:15,-1,11,
+2026-09-28T12:40,-1,10,</pre>
+</div>
+
+<div style="margin-top: auto; font-size: 12px; color: #5A6670; text-align: center">Tuna Counter · com.ibob_42.tunacounter · v0.1</div>
+</div>
+
+<nav aria-label="Main navigation" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0px; background: #FFFFFF; border-top: 1px solid #E2DACB; padding: 8px 12px 24px 12px">
+<a href="Main.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; font-size: 12px; font-weight: 500; color: #5A6670">
+<span style="width: 64px; height: 32px; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="7" rx="8" ry="3"></ellipse><path d="M4 7v10c0 1.7 3.6 3 8 3s8-1.3 8-3V7"></path></svg></span>
+Pantry</a>
+<a href="Storico.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; font-size: 12px; font-weight: 500; color: #5A6670">
+<span style="width: 64px; height: 32px; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><path d="M7 15l4-4 3 3 5-6"></path></svg></span>
+History</a>
+<a href="Backup.dc.html" aria-current="page" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; font-size: 12px; font-weight: 700; color: #1B2B38">
+<span style="width: 64px; height: 32px; border-radius: 16px; background: #F1D9CF; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M7 10l5 5 5-5"></path><path d="M12 15V3"></path></svg></span>
+Backup</a>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

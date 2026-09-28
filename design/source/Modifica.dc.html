@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tuna Counter — Adjust quantity</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&amp;family=Figtree:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:'Figtree',sans-serif;background:#F4EFE6;color:#1B2B38}
+a{color:#1B2B38;text-decoration:none}a:hover{color:#B8452F}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #8E8A83; display: flex; flex-direction: column; justify-content: flex-end; font-family: 'Figtree', sans-serif; color: #1B2B38; position: relative">
+<div style="position: absolute; top: 44px; left: 24px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 26px; color: #5E5A54">Tuna Counter</div>
+
+<section aria-label="Adjust quantity" style="background: #FFFFFF; border-radius: 28px 28px 0 0; padding: 12px 24px 32px 24px; display: flex; flex-direction: column; gap: 20px">
+<div style="align-self: center; width: 36px; height: 4px; border-radius: 2px; background: #D9CFBE"></div>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 24px">Adjust quantity</h2>
+<div style="font-size: 15px; color: #5A6670">Currently in the pantry: 10 cans</div>
+</div>
+
+<div role="radiogroup" aria-label="Change type" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; background: #F4EFE6; border-radius: 14px; padding: 4px">
+<button role="radio" aria-checked="true" style="height: 44px; border: none; border-radius: 10px; background: #1B2B38; color: #FFFFFF; font-size: 15px; font-weight: 700">Add</button>
+<button role="radio" aria-checked="false" style="height: 44px; border: none; border-radius: 10px; background: transparent; color: #1B2B38; font-size: 15px; font-weight: 600">Remove</button>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="qty" style="font-size: 14px; font-weight: 600">Quantity</label>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; border: 1px solid #E2DACB; border-radius: 18px; padding: 12px">
+<button aria-label="Decrease" style="width: 56px; height: 56px; flex-shrink: 0; border-radius: 28px; border: 1px solid #E2DACB; background: #FFFFFF; color: #1B2B38; display: flex; align-items: center; justify-content: center">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"></path></svg>
+</button>
+<input id="qty" type="number" inputmode="numeric" min="1" value="6" style="width: 120px; height: 64px; box-sizing: border-box; border: 2px solid #1B2B38; border-radius: 14px; background: #FFFFFF; text-align: center; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 44px; color: #1B2B38">
+<button aria-label="Increase" style="width: 56px; height: 56px; flex-shrink: 0; border-radius: 28px; border: 1px solid #E2DACB; background: #FFFFFF; color: #1B2B38; display: flex; align-items: center; justify-content: center">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
+</button>
+</div>
+<div style="font-size: 13px; color: #5A6670">Tap the number to type it directly</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="note" style="font-size: 14px; font-weight: 600">Note <span style="font-weight: 400; color: #5A6670">(optional)</span></label>
+<textarea id="note" rows="2" placeholder="e.g. Weekly groceries" style="border-radius: 12px; border: 1px solid #E2DACB; padding: 12px 14px; font-family: inherit; font-size: 16px; color: #1B2B38; background: #FFFFFF; resize: none"></textarea>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="when" style="font-size: 14px; font-weight: 600">Date and time</label>
+<input id="when" type="text" value="Today, 12:40" style="height: 48px; border-radius: 12px; border: 1px solid #E2DACB; padding: 0 14px; font-family: inherit; font-size: 16px; color: #1B2B38; background: #FFFFFF">
+</div>
+
+<div style="border-radius: 14px; background: #F4EFE6; padding: 12px 14px; font-size: 15px; color: #1B2B38">After saving: <strong>16 cans</strong></div>
+
+<div style="display: flex; gap: 12px">
+<a href="Main.dc.html" style="flex-grow: 1; height: 52px; border-radius: 26px; border: 1px solid #1B2B38; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700">Cancel</a>
+<a href="Main.dc.html" style="flex-grow: 1; height: 52px; border-radius: 26px; background: #B8452F; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700">Save</a>
+</div>
+</section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

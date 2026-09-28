@@ -1,8 +1,8 @@
 # Tuna Counter
 
-App Android per contare le scatolette di tonno in casa. Vedi `SPEC.md` per la
-specifica funzionale, `PLAN.md` per i passi di sviluppo e `PLAY-STORE.md` per
-la checklist di pubblicazione.
+App Android per contare le scatolette di tonno in casa. Vedi `docs/spec.md` per la
+specifica funzionale, `docs/plan.md` per i passi di sviluppo, `docs/play-store.md`
+per la checklist di pubblicazione e `docs/design.md` per il design system.
 
 ## Sviluppo
 
