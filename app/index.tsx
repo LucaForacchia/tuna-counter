@@ -1,9 +1,13 @@
 import { StyleSheet, Text, View } from 'react-native';
 
+import { useThemeColors } from '@/ui/theme';
+
 export default function HomeScreen() {
+  const colors = useThemeColors();
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tuna Counter</Text>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <Text style={[styles.title, { color: colors.text }]}>Tuna Counter</Text>
     </View>
   );
 }
