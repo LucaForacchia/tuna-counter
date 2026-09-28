@@ -39,6 +39,11 @@ Ogni evento nel log mostra anche il **valore risultante** dopo di esso.
 ## 3. Schermate
 
 ### 3.1 Home
+- **Primo avvio**: se non esiste ancora nessun evento (DB vuoto, e non è stato
+  importato un CSV), l'app chiede di impostare il conteggio iniziale della
+  dispensa ("Quante scatolette hai ora?"). Questo crea l'unico evento `set`
+  che l'interfaccia genera normalmente. Da qui in avanti si usano solo
+  Consuma e il Pannello Modifica (Aggiungi/Togli).
 - Il numero corrente, **molto grande**, al centro.
 - Sotto, in piccolo: "ultima modifica: ieri, 19:40".
 - Pulsante principale **Consuma** (−1), grande e comodo col pollice.
@@ -47,9 +52,10 @@ Ogni evento nel log mostra anche il **valore risultante** dopo di esso.
 - Accesso a Storico e Impostazioni (tab bar in basso o icone in alto).
 
 ### 3.2 Pannello Modifica (bottom sheet)
-- Selettore modalità: **Aggiungi / Togli** oppure **Imposta a**.
-  - Aggiungi/Togli: stepper con −/+ e campo numerico (es. +6 dopo la spesa).
-  - Imposta a: campo numerico con il valore assoluto (es. inventario: "ne ho 9").
+- Selettore modalità **Aggiungi / Togli**: stepper con −/+ e campo numerico
+  (es. +6 dopo la spesa). Genera sempre un evento `delta` (positivo per
+  Aggiungi, negativo per Togli). Non c'è una modalità "Imposta a" qui: il
+  valore assoluto si imposta solo al primo avvio (3.1) o con il reset (3.4).
 - **Quando**: default "adesso"; tocco → selettore data e ora (solo passato).
 - Nota opzionale.
 - Anteprima: "Da 4 → 10".
@@ -76,6 +82,10 @@ Due viste, con un selettore in alto:
   - **Sostituisci**: cancella tutto e carica il file (conferma esplicita).
 - Riepilogo import: "32 eventi importati, 3 già presenti, 1 riga non valida (riga 17)".
 - L'import è **atomico**: se il file è illeggibile non si modifica nulla.
+- **Reset**: azione distruttiva, sempre con conferma esplicita che avvisa che
+  cancella tutto lo storico. Elimina tutti gli eventi e crea un nuovo evento
+  `set` con il valore scelto (di norma 0), come se l'app fosse ripartita da
+  zero. Pensata come via di fuga da usare raramente, non come flusso normale.
 
 ## 4. Formato CSV
 

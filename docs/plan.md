@@ -89,12 +89,21 @@ visive comuni prima di costruire qualunque schermata.
 - **Fatto quando**: sul telefono, toccando Consuma il numero scende, Annulla
   ripristina il valore, a 0 il pulsante è disabilitato, e l'aspetto rispecchia
   `design/screenshots/01-home.png` in entrambi i temi.
+- **Nota aggiunta al passo 6**: la modalità "Imposta a" citata inizialmente
+  in SPEC.md §3.2 non è nel mockup del Pannello Modifica. Deciso con l'utente:
+  si usa solo al primo avvio (setup del conteggio iniziale, qui su Home) e
+  nel reset (passo 9) — il Pannello Modifica resta Aggiungi/Togli come nel
+  mockup. Vedi `docs/spec.md` §3.1/§3.4 aggiornate.
 
 ## 6. Pannello Modifica
-- Bottom sheet con selettore Aggiungi/Togli vs Imposta a, stepper e campo
-  numerico, selettore data/ora (solo passato), nota opzionale, anteprima
-  "Da X → Y" (o "After saving: N cans" come nel mockup — scegliere la copy
-  definitiva al passo 10 di i18n), conferma/annulla.
+- **Primo avvio**: se il DB non ha ancora eventi, Home mostra un piccolo
+  setup ("Quante scatolette hai ora?") che crea l'unico evento `set`
+  generato dall'interfaccia normale, invece di partire silenziosamente da 0.
+- Bottom sheet con selettore Aggiungi/Togli (solo queste due opzioni, come
+  nel mockup — niente "Imposta a" qui, vedi nota al passo 5), stepper e campo
+  numerico, selettore data/ora (solo passato, con
+  `@react-native-community/datetimepicker`), nota opzionale, anteprima
+  "After saving: N cans", conferma/annulla.
 - Scrittura dell'evento nel DB e ricalcolo Home.
 - Gestione del caso "evento nel passato che renderebbe negativo il
   conteggio in qualche punto" secondo la regola di blocco in `docs/spec.md`.
@@ -104,9 +113,11 @@ visive comuni prima di costruire qualunque schermata.
   circolari 56dp e campo numerico centrale 120×64dp toccabile per digitare,
   box anteprima su sfondo `background`, bottoni Annulla (outline)/Salva
   (filled `accent`) alti 52dp.
-- **Fatto quando**: sul telefono si può aggiungere/togliere/impostare un
-  valore, anche con data nel passato, l'Home si aggiorna, e l'aspetto
-  rispecchia `design/screenshots/02-adjust-quantity.png`.
+- **Fatto quando**: sul telefono, al primo avvio si imposta il conteggio
+  iniziale; poi si può aggiungere/togliere un valore, anche con data nel
+  passato (bloccato se farebbe scendere il conteggio sotto 0 in qualche punto
+  della storia), l'Home si aggiorna, e l'aspetto rispecchia
+  `design/screenshots/02-adjust-quantity.png`.
 
 ## 7. Storico — Log
 - Vista lista in ordine cronologico inverso: data/ora, variazione, valore
@@ -141,6 +152,9 @@ visive comuni prima di costruire qualunque schermata.
   condivide con `expo-sharing`.
 - Importa CSV: `expo-document-picker`, scelta Unisci/Sostituisci, import
   atomico, riepilogo ("N importati, M già presenti, K righe non valide").
+- **Reset**: azione distruttiva separata (non nel mockup, da aggiungere),
+  sempre con conferma esplicita che avvisa che cancella tutto lo storico —
+  vedi `docs/spec.md` §3.4. Via di fuga pensata per essere usata raramente.
 - Applicare `docs/design.md` (sezione "Backup"): due card con icona
   quadrata arrotondata 44dp (`accentSoft`/download per Export,
   `cool`/upload per Import), bottone Export filled `accent`, bottone Import

@@ -10,6 +10,8 @@ function getDb(): Database {
   if (!dbSingleton) {
     dbSingleton = openDatabase();
     migrate(dbSingleton);
+    // one-time cleanup of the throwaway seed event from the plan step 3/4 DB smoke test
+    deleteEvent(dbSingleton, 'db-smoke-test-seed');
   }
   return dbSingleton;
 }
@@ -17,9 +19,11 @@ function getDb(): Database {
 /** Shared across every screen: one DB connection, refreshed after each write. */
 export function useEvents() {
   const [events, setEvents] = useState<DomainEvent[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const refresh = useCallback(() => {
     setEvents(listEvents(getDb()));
+    setIsLoaded(true);
   }, []);
 
   useEffect(() => {
@@ -42,5 +46,5 @@ export function useEvents() {
     [refresh]
   );
 
-  return { events, addEvent, removeEvent, refresh };
+  return { events, isLoaded, addEvent, removeEvent, refresh };
 }

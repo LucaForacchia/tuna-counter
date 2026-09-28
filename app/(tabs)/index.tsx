@@ -1,7 +1,7 @@
 import * as Haptics from 'expo-haptics';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 import { useCallback, useMemo, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useEvents } from '@/db/useEvents';
@@ -12,6 +12,7 @@ import { validateNewEvent } from '@/domain/validate';
 import { formatRelativeDayTime } from '@/ui/formatRelativeDayTime';
 import { fontFamilies } from '@/ui/fonts';
 import { MinusIcon } from '@/ui/icons/MinusIcon';
+import { PlusIcon } from '@/ui/icons/PlusIcon';
 import { SettingsIcon } from '@/ui/icons/SettingsIcon';
 import { Snackbar } from '@/ui/Snackbar';
 import { useThemeColors } from '@/ui/theme';
@@ -22,14 +23,69 @@ function formatDeltaLabel(event: Pick<ReplayedEvent, 'type' | 'value'>): string 
   return event.value >= 0 ? `+${event.value}` : `${event.value}`;
 }
 
+/** Shown once, when the DB has no events yet — creates the only `set` event the UI normally generates. */
+function FirstRunSetup({ onDone }: { onDone: (initialCount: number) => void }) {
+  const colors = useThemeColors();
+  const [value, setValue] = useState(1);
+
+  return (
+    <View style={[styles.screen, styles.setupScreen, { backgroundColor: colors.background }]}>
+      <Text style={[styles.setupTitle, { color: colors.ink, fontFamily: fontFamilies.displayExtraBold }]}>How many cans do you have?</Text>
+      <Text style={[styles.setupSubtitle, { color: colors.inkMuted, fontFamily: fontFamilies.bodyRegular }]}>
+        Set your starting count once — from here on you just use Add/Remove.
+      </Text>
+
+      <View style={[styles.quantityRow, { borderColor: colors.outline }]}>
+        <Pressable
+          accessibilityLabel="Decrease"
+          onPress={() => setValue((v) => Math.max(0, v - 1))}
+          style={[styles.stepper, { borderColor: colors.outline, backgroundColor: colors.surface }]}
+        >
+          <MinusIcon size={24} color={colors.ink} strokeWidth={2.2} />
+        </Pressable>
+        <TextInput
+          value={String(value)}
+          onChangeText={(text) => {
+            const parsed = Number(text.replace(/[^0-9]/g, ''));
+            setValue(Number.isInteger(parsed) ? parsed : 0);
+          }}
+          keyboardType="numeric"
+          style={[styles.quantityInput, { borderColor: colors.ink, color: colors.ink, fontFamily: fontFamilies.displayExtraBold }]}
+        />
+        <Pressable
+          accessibilityLabel="Increase"
+          onPress={() => setValue((v) => v + 1)}
+          style={[styles.stepper, { borderColor: colors.outline, backgroundColor: colors.surface }]}
+        >
+          <PlusIcon size={24} color={colors.ink} strokeWidth={2.2} />
+        </Pressable>
+      </View>
+
+      <Pressable onPress={() => onDone(value)} style={[styles.setupButton, { backgroundColor: colors.accent }]}>
+        <Text style={[styles.buttonLabel, { color: '#FFFFFF', fontFamily: fontFamilies.bodyBold }]}>Get started</Text>
+      </Pressable>
+    </View>
+  );
+}
+
 export default function PantryScreen() {
   const colors = useThemeColors();
   const insets = useSafeAreaInsets();
-  const { events, addEvent, removeEvent } = useEvents();
+  const { events, isLoaded, addEvent, removeEvent, refresh } = useEvents();
   const [pendingUndo, setPendingUndo] = useState<string | null>(null);
+
+  useFocusEffect(useCallback(() => refresh(), [refresh]));
 
   const count = currentCount(events);
   const lastEvent = useMemo(() => replay(events).at(-1), [events]);
+
+  const finishSetup = useCallback(
+    (initialCount: number) => {
+      const now = new Date().toISOString();
+      addEvent({ id: generateEventId(), occurredAt: now, recordedAt: now, type: 'set', value: initialCount });
+    },
+    [addEvent]
+  );
 
   const consumeOne = useCallback(() => {
     if (count <= 0) return;
@@ -47,6 +103,10 @@ export default function PantryScreen() {
     removeEvent(pendingUndo);
     setPendingUndo(null);
   }, [pendingUndo, removeEvent]);
+
+  if (isLoaded && events.length === 0) {
+    return <FirstRunSetup onDone={finishSetup} />;
+  }
 
   return (
     <View style={[styles.screen, { backgroundColor: colors.background }]}>
@@ -230,5 +290,54 @@ const styles = StyleSheet.create({
   },
   historyLink: {
     fontSize: 15,
+  },
+  setupScreen: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 24,
+    paddingHorizontal: spacing.screenPadding,
+  },
+  setupTitle: {
+    fontSize: 26,
+    textAlign: 'center',
+  },
+  setupSubtitle: {
+    fontSize: 15,
+    textAlign: 'center',
+  },
+  quantityRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 12,
+    borderWidth: 1,
+    borderRadius: 18,
+    padding: 12,
+  },
+  stepper: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  quantityInput: {
+    width: 120,
+    height: 64,
+    borderWidth: 2,
+    borderRadius: 14,
+    textAlign: 'center',
+    fontSize: 44,
+  },
+  setupButton: {
+    width: '100%',
+    height: 52,
+    borderRadius: 26,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonLabel: {
+    fontSize: 16,
   },
 });
