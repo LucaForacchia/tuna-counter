@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import type { DomainEvent } from '../domain/events';
+import { currentCount } from '../domain/replay';
 import type { Database } from './client';
 import { deleteEvent, insertEvent, listEvents, migrate, openDatabase } from './client';
 
@@ -10,8 +11,6 @@ function getDb(): Database {
   if (!dbSingleton) {
     dbSingleton = openDatabase();
     migrate(dbSingleton);
-    // one-time cleanup of the throwaway seed event from the plan step 3/4 DB smoke test
-    deleteEvent(dbSingleton, 'db-smoke-test-seed');
   }
   return dbSingleton;
 }
@@ -22,7 +21,19 @@ export function useEvents() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   const refresh = useCallback(() => {
-    setEvents(listEvents(getDb()));
+    const db = getDb();
+    let fetched = listEvents(db);
+
+    // validateNewEvent() never lets a legitimate write reach a negative count, so a
+    // negative count here means the log is corrupted (e.g. a dev seed event was
+    // deleted out from under real events layered on top of it) — the only safe
+    // repair is to clear it and start over, same as the future Reset action.
+    if (currentCount(fetched) < 0) {
+      for (const event of fetched) deleteEvent(db, event.id);
+      fetched = [];
+    }
+
+    setEvents(fetched);
     setIsLoaded(true);
   }, []);
 
