@@ -3,6 +3,8 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { insertEvent, listEvents, migrate, openDatabase } from '@/db/client';
 import { currentCount } from '@/domain/replay';
+import { fontFamilies } from '@/ui/fonts';
+import { MinusIcon } from '@/ui/icons/MinusIcon';
 import { useThemeColors } from '@/ui/theme';
 
 // Temporary DB smoke test for plan step 3 — proves migrate() + insertEvent() +
@@ -38,8 +40,16 @@ export default function HomeScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <Text style={[styles.title, { color: colors.text }]}>Tuna Counter</Text>
-      <Text style={[styles.subtitle, { color: colors.text }]}>{dbStatus}</Text>
+      <Text style={[styles.title, { color: colors.ink, fontFamily: fontFamilies.displayExtraBold }]}>Tuna Counter</Text>
+
+      <View style={[styles.iconCircle, { backgroundColor: colors.accent }]}>
+        <MinusIcon size={28} color="#FFFFFF" strokeWidth={2.6} />
+      </View>
+
+      <Text style={[styles.fontCheck, { color: colors.ink, fontFamily: fontFamilies.displayBold }]}>Bricolage Grotesque Bold</Text>
+      <Text style={[styles.fontCheck, { color: colors.inkMuted, fontFamily: fontFamilies.bodySemiBold }]}>Figtree SemiBold</Text>
+
+      <Text style={[styles.subtitle, { color: colors.inkMuted, fontFamily: fontFamilies.bodyRegular }]}>{dbStatus}</Text>
     </View>
   );
 }
@@ -49,10 +59,20 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    gap: 12,
   },
   title: {
     fontSize: 28,
-    fontWeight: '600',
+  },
+  iconCircle: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  fontCheck: {
+    fontSize: 16,
   },
   subtitle: {
     marginTop: 12,
