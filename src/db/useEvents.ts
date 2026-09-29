@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import type { DomainEvent } from '../domain/events';
 import { currentCount } from '../domain/replay';
 import type { Database } from './client';
-import { deleteEvent, insertEvent, listEvents, migrate, openDatabase, replaceAllEvents } from './client';
+import { deleteEvent, getSetting, insertEvent, insertEvents, listEvents, migrate, openDatabase, replaceAllEvents, setSetting } from './client';
 
 let dbSingleton: Database | null = null;
 
@@ -57,6 +57,14 @@ export function useEvents() {
     [refresh]
   );
 
+  const addEvents = useCallback(
+    (added: readonly DomainEvent[]) => {
+      insertEvents(getDb(), added);
+      refresh();
+    },
+    [refresh]
+  );
+
   const replaceEvents = useCallback(
     (next: readonly DomainEvent[]) => {
       replaceAllEvents(getDb(), next);
@@ -65,5 +73,13 @@ export function useEvents() {
     [refresh]
   );
 
-  return { events, isLoaded, addEvent, removeEvent, replaceEvents, refresh };
+  return { events, isLoaded, addEvent, addEvents, removeEvent, replaceEvents, refresh };
+}
+
+export function readSetting(key: string): string | null {
+  return getSetting(getDb(), key);
+}
+
+export function writeSetting(key: string, value: string): void {
+  setSetting(getDb(), key, value);
 }

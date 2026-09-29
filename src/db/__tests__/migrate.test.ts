@@ -61,4 +61,17 @@ describe('the real migrations list', () => {
       ],
     });
   });
+
+  it('never changes migration 2 once shipped — add a new migration instead of editing this one', () => {
+    expect(migrations[1]).toEqual({
+      version: 2,
+      description: 'create settings table',
+      statements: [
+        `CREATE TABLE settings (
+        key TEXT PRIMARY KEY NOT NULL,
+        value TEXT NOT NULL
+      )`,
+      ],
+    });
+  });
 });

@@ -4,29 +4,15 @@ Passi piccoli, uno per sessione. Ogni passo è "fatto" solo quando passano
 `npx tsc --noEmit` e `npx jest`, e quando indicato è stato provato sul telefono
 con Expo Go.
 
-**Stato attuale**: passi 0-7 fatti e testati sul telefono; passo 8 (Storico —
-Grafico) implementato (commit su `master`), **in attesa di conferma sul
-telefono**.
+**Stato attuale**: passi 0-8 fatti e testati sul telefono; passo 9 (Backup)
+implementato (commit su `master`), **in attesa di conferma sul telefono**.
+Esiste anche un pulsante "DEV · Load demo data" (solo `__DEV__`, schermata
+Backup) che carica 90 giorni di storico di esempio.
 
-**Per continuare domani**:
-1. Prima cosa: prova il passo 8 sul telefono (ricarica l'app da Expo Go) e
-   verifica la checklist qui sotto. Se qualcosa non torna, dillo prima di
-   passare oltre.
-   - La card del grafico sopra "Change log" mostra: valore corrente grande +
-     "today", "min X · max Y" a destra, linea a gradini con riempimento,
-     etichette data sotto.
-   - I tre tab **30 days / 1 year / All** cambiano il grafico in modo
-     coerente (es. "All" copre tutta la storia, "30 days" solo l'ultimo
-     mese).
-   - Dopo un Consuma o un Aggiungi/Togli, tornando su Storico il grafico e il
-     "today" si aggiornano.
-   - Nessun crash tornando sulla tab con finestra stretta o con pochi/nessun
-     evento.
-2. Se il passo 8 è confermato, segna anche questa riga "FATTO" e si passa al
-   **passo 9** (Impostazioni — Export/Import CSV, vedi sotto).
-3. Nulla di pendente nel repo: ogni passo fin qui è stato committato
-   direttamente su `master` (nessun branch feature aperto, nessun remote
-   configurato).
+**Per continuare**: prova il passo 9 sul telefono (checklist nel messaggio
+della sessione: export, import Unisci/Sostituisci, CSV corrotto, Reset). Se
+tutto torna, segna "FATTO" e si passa al **passo 10** (i18n). Nulla di
+pendente nel repo: tutto su `master`, nessun remote.
 
 ## 0. Setup progetto — FATTO
 Progetto Expo (SDK 57, TypeScript strict, Expo Router) creato, `app.json`
@@ -143,7 +129,7 @@ visive comuni prima di costruire qualunque schermata.
   della storia), l'Home si aggiorna, e l'aspetto rispecchia
   `design/screenshots/02-adjust-quantity.png`.
 
-## 7. Storico — Log
+## 7. Storico — Log — FATTO
 - Vista lista in ordine cronologico inverso: data/ora, variazione, valore
   risultante, nota, indicatore per eventi inseriti nel passato.
 - Eliminazione evento (swipe o tocco lungo) con conferma, ricalcolo replay.
@@ -155,7 +141,7 @@ visive comuni prima di costruire qualunque schermata.
   creati nei passi precedenti, l'eliminazione funziona con conferma, e
   l'aspetto rispecchia la parte "log" di `design/screenshots/03-history.png`.
 
-## 8. Storico — Grafico
+## 8. Storico — Grafico — FATTO
 - Grafico a gradini del conteggio nel tempo, selettore intervallo
   30gg / 1 anno / tutto, usando la serie calcolata dal dominio (passo
   1/2, regola di costruzione in `docs/spec.md` §3.3).

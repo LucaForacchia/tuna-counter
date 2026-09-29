@@ -26,5 +26,14 @@ export const migrations: Migration[] = [
       )`,
       'CREATE INDEX events_occurred_at ON events (occurred_at)',
     ],
+  },  {
+    version: 2,
+    description: 'create settings table',
+    statements: [
+      `CREATE TABLE settings (
+        key TEXT PRIMARY KEY NOT NULL,
+        value TEXT NOT NULL
+      )`,
+    ],
   },
 ];

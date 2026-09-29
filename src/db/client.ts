@@ -46,6 +46,21 @@ export function deleteEvent(db: Database, id: string): void {
 export function replaceAllEvents(db: Database, events: readonly DomainEvent[]): void {
   db.withTransactionSync(() => {
     db.runSync('DELETE FROM events');
+    insertEvents(db, events);
+  });
+}
+
+/** Inserts every event or none of them (one transaction). */
+export function insertEvents(db: Database, events: readonly DomainEvent[]): void {
+  db.withTransactionSync(() => {
     for (const event of events) insertEvent(db, event);
   });
+}
+
+export function getSetting(db: Database, key: string): string | null {
+  return db.getFirstSync<{ value: string }>('SELECT value FROM settings WHERE key = ?', [key])?.value ?? null;
+}
+
+export function setSetting(db: Database, key: string, value: string): void {
+  db.runSync('INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)', [key, value]);
 }
