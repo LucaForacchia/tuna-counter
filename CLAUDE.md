@@ -6,7 +6,7 @@ Questo file va nella radice del repository. Claude Code lo legge a ogni sessione
 - Tuna Counter: app **Android** per contare le scatolette di tonno. Destinata alla **pubblicazione su Google Play**, quindi va trattata come prodotto vero, non come prototipo.
 - Specifica completa in `docs/spec.md`: leggila prima di modificare funzionalità. Checklist di pubblicazione in `docs/play-store.md`. Design system (colori, font, layout) in `docs/design.md`.
 - Lo sviluppatore (Luca) ha una laurea in matematica ma **non ha mai sviluppato app mobile**. Spiega brevemente le scelte non ovvie di React Native/Expo/Android, senza dilungarti su ciò che è semplice programmazione.
-- Rispondi in italiano. Codice, nomi di variabili e commit vanno in inglese. Testi dell'interfaccia in file di traduzione (it + en).
+- Rispondi in italiano. Codice, nomi di variabili e commit vanno in inglese. Al momento l'app è **solo in inglese**, con i testi scritti direttamente nei componenti; le traduzioni (it + en, passo 10 del piano) sono un possibile miglioramento futuro, in standby per decisione di Luca. Non introdurre infrastruttura i18n finché non si riprende quel passo.
 
 ## Vincoli della macchina (importante)
 - Il computer ha **8 GB di RAM**. Non proporre l'emulatore Android, Android Studio o build locali (`eas build --local`, `expo run:android`).
@@ -21,7 +21,7 @@ Questo file va nella radice del repository. Claude Code lo legge a ogni sessione
 - Persistenza: `expo-sqlite`, con migrazioni versionate.
 - Export: `expo-file-system` + `expo-sharing`. Import: `expo-document-picker`.
 - Grafico: disegnato a mano con `react-native-svg` (`Path`/`Line`/`Circle`), niente libreria di grafici esterna.
-- i18n: `expo-localization` + una libreria leggera di traduzioni (es. `i18next`/`react-i18next`).
+- i18n (**in standby**, vedi sopra; non installare finché non si riprende il passo 10): `expo-localization` + una libreria leggera di traduzioni (es. `i18next`/`react-i18next`).
 - Test: Jest (`jest-expo`) per la logica di dominio.
 - Installa le dipendenze con `npx expo install <pkg>` (non `npm install`), così le versioni restano allineate alla SDK.
 
@@ -30,7 +30,7 @@ Questo file va nella radice del repository. Claude Code lo legge a ogni sessione
 src/
   domain/   # logica pura, NESSUN import da React/Expo: eventi, replay, validazione, CSV parse/serialize
   db/       # SQLite: schema, migrazioni, query
-  i18n/     # traduzioni it/en
+  i18n/     # (futuro, passo 10 in standby) traduzioni it/en
   ui/       # componenti riutilizzabili, tema
 app/        # schermate (Expo Router)
 ```
