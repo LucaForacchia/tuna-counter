@@ -5,8 +5,8 @@ Passi piccoli, uno per sessione. Ogni passo è "fatto" solo quando passano
 con Expo Go.
 
 **Stato attuale**: passi 0-9 fatti e testati sul telefono; passo 10 (i18n)
-in standby (solo inglese); passo 11 (Rifinitura) implementato, **in attesa
-di conferma sul telefono**. Prossimo: 12 (build APK di prova). Esiste anche
+in standby (solo inglese); passo 11 (Rifinitura) fatto e confermato sul telefono.
+Prossimo: 12 (build APK di prova). Esiste anche
 un pulsante "DEV · Load demo data" (solo `__DEV__`, schermata Backup).
 Prima di pubblicare vanno compilati `PRIVACY_POLICY_URL` e `CONTACT_EMAIL`
 in `src/config/about.ts` (le righe restano nascoste finché sono `null`).
@@ -186,7 +186,7 @@ visive comuni prima di costruire qualunque schermata.
   cambia lingua senza riavvio manuale del testo (o al riavvio dell'app,
   da verificare in pratica).
 
-## 11. Rifinitura — implementato, da confermare sul telefono
+## 11. Rifinitura — FATTO
 - Tema chiaro/scuro automatico (con la palette scura decisa al passo 4),
   font a cifre fisse per il numero verificato senza clipping sotto
   ridimensionamento del font di sistema, animazione leggera al cambio.
@@ -200,6 +200,10 @@ visive comuni prima di costruire qualunque schermata.
   schermo, chiusura app a metà operazione — nessun crash.
 - **Fatto quando**: giro manuale su questi casi sul telefono senza crash, in
   entrambi i temi.
+- **Limite noto, accettato**: con Dimensioni schermo (Display Size) e Font Size
+  al massimo *più* grassetto, il cerchio della Home si sovrappone al titolo e
+  il titolo di History finisce sotto la barra in basso. Configurazione
+  estrema, deciso di non gestirla. Se servisse: rendere la Home scrollabile.
 
 ## 12. Build APK di prova
 - Configurazione profilo EAS `preview`, build cloud con EAS Build (piano
