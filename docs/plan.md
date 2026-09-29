@@ -4,15 +4,12 @@ Passi piccoli, uno per sessione. Ogni passo è "fatto" solo quando passano
 `npx tsc --noEmit` e `npx jest`, e quando indicato è stato provato sul telefono
 con Expo Go.
 
-**Stato attuale**: passi 0-8 fatti e testati sul telefono; passo 9 (Backup)
-implementato (commit su `master`), **in attesa di conferma sul telefono**.
-Esiste anche un pulsante "DEV · Load demo data" (solo `__DEV__`, schermata
-Backup) che carica 90 giorni di storico di esempio.
-
-**Per continuare**: prova il passo 9 sul telefono (checklist nel messaggio
-della sessione: export, import Unisci/Sostituisci, CSV corrotto, Reset). Se
-tutto torna, segna "FATTO" e si passa al **passo 10** (i18n). Nulla di
-pendente nel repo: tutto su `master`, nessun remote.
+**Stato attuale**: passi 0-9 fatti e testati sul telefono. Il passo 10
+(i18n) è **in standby** per decisione dell'utente: l'app resta solo in
+inglese, con le stringhe scritte direttamente nei componenti. Prossimo passo
+attivo: **11** (Rifinitura). Esiste anche un pulsante "DEV · Load demo data"
+(solo `__DEV__`, schermata Backup). Nulla di pendente nel repo: tutto su
+`master`, nessun remote.
 
 ## 0. Setup progetto — FATTO
 Progetto Expo (SDK 57, TypeScript strict, Expo Router) creato, `app.json`
@@ -161,7 +158,7 @@ visive comuni prima di costruire qualunque schermata.
   ciascun intervallo, e l'aspetto rispecchia la parte "grafico" di
   `design/screenshots/03-history.png`.
 
-## 9. Impostazioni — Export/Import CSV ("Backup")
+## 9. Impostazioni — Export/Import CSV ("Backup") — FATTO
 - Esporta CSV: usa la logica del passo 2, salva con `expo-file-system` e
   condivide con `expo-sharing`.
 - Importa CSV: `expo-document-picker`, scelta Unisci/Sostituisci, import
@@ -178,7 +175,7 @@ visive comuni prima di costruire qualunque schermata.
   nulla e mostra un errore chiaro; l'aspetto rispecchia
   `design/screenshots/04-backup.png`.
 
-## 10. i18n
+## 10. i18n — IN STANDBY (solo inglese per ora)
 - Estrazione di tutte le stringhe UI in file di traduzione it/en
   (`expo-localization` + `i18next`/`react-i18next`), fallback inglese.
 - Formattazione date/numeri secondo la lingua di sistema.
