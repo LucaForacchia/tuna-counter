@@ -36,6 +36,13 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "5b1fff23-705d-45f5-9599-d3c969be78e5"
+      }
+    },
+    "owner": "ibob42-snails"
   }
 }
