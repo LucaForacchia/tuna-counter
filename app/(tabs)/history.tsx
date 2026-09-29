@@ -134,6 +134,7 @@ export default function HistoryScreen() {
               accessibilityRole="tab"
               accessibilityState={{ selected: period === p }}
               onPress={() => setPeriod(p)}
+              hitSlop={{ top: 4, bottom: 4 }}
               style={[styles.periodOption, period === p && { backgroundColor: colors.surface }]}
             >
               <Text

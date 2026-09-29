@@ -1,6 +1,7 @@
 import { useFonts } from 'expo-font';
 import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
+import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 
@@ -32,9 +33,11 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <StatusBar style="auto" />
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="adjust" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="about" />
       </Stack>
     </ThemeProvider>
   );

@@ -29,7 +29,7 @@ export function Snackbar({ visible, message, actionLabel, onAction, onDismiss, d
     <View style={[styles.container, { backgroundColor: colors.ink }]}>
       <Text style={[styles.message, { color: colors.background, fontFamily: fontFamilies.bodyRegular }]}>{message}</Text>
       {actionLabel && onAction ? (
-        <Pressable onPress={onAction} hitSlop={8}>
+        <Pressable onPress={onAction} hitSlop={{ top: 14, bottom: 14, left: 14, right: 14 }}>
           <Text style={[styles.action, { color: colors.accentSoft, fontFamily: fontFamilies.bodyBold }]}>{actionLabel}</Text>
         </Pressable>
       ) : null}

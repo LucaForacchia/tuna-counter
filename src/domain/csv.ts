@@ -98,7 +98,10 @@ function detectDelimiter(headerLine: string): ',' | ';' | null {
   return null;
 }
 
-function parseRow(fields: string[], line: number): { event: DomainEvent } | { error: CsvRowError } {
+/** Tolerance for a backup written by a device whose clock runs slightly ahead of this one. */
+const FUTURE_TOLERANCE_MS = 5 * 60 * 1000;
+
+function parseRow(fields: string[], line: number, latestAllowedMs: number): { event: DomainEvent } | { error: CsvRowError } {
   if (fields.length !== COLUMNS.length) {
     return { error: { line, reason: `expected ${COLUMNS.length} columns, got ${fields.length}` } };
   }
@@ -106,6 +109,7 @@ function parseRow(fields: string[], line: number): { event: DomainEvent } | { er
 
   if (!id.trim()) return { error: { line, reason: 'missing id' } };
   if (Number.isNaN(Date.parse(occurredAt))) return { error: { line, reason: `invalid occurred_at "${occurredAt}"` } };
+  if (Date.parse(occurredAt) > latestAllowedMs) return { error: { line, reason: `occurred_at "${occurredAt}" is in the future` } };
   if (Number.isNaN(Date.parse(recordedAt))) return { error: { line, reason: `invalid recorded_at "${recordedAt}"` } };
   if (type !== 'delta' && type !== 'set') return { error: { line, reason: `invalid type "${type}"` } };
   if (!rawValue.trim()) return { error: { line, reason: 'missing value' } };
@@ -121,9 +125,10 @@ function parseRow(fields: string[], line: number): { event: DomainEvent } | { er
  * Parses a Tuna Counter backup CSV. Malformed rows are reported (with their
  * line number) rather than aborting the whole import; only a file whose
  * header isn't recognizable at all sets `headerError`. An empty file, or one
- * with only the header row, is a valid "0 events" import.
+ * with only the header row, is a valid "0 events" import. Events dated after
+ * `now` are rejected as bad rows, like a single new event (docs/spec.md §2).
  */
-export function parseEventsCsv(content: string): ParseCsvResult {
+export function parseEventsCsv(content: string, now: Date = new Date()): ParseCsvResult {
   const withoutBom = content.charCodeAt(0) === 0xfeff ? content.slice(1) : content;
 
   if (withoutBom.trim().length === 0) {
@@ -140,9 +145,10 @@ export function parseEventsCsv(content: string): ParseCsvResult {
   const records = parseRecords(withoutBom, delimiter);
   const events: DomainEvent[] = [];
   const rowErrors: CsvRowError[] = [];
+  const latestAllowedMs = now.getTime() + FUTURE_TOLERANCE_MS;
 
   for (let i = 1; i < records.length; i++) {
-    const result = parseRow(records[i], i + 1);
+    const result = parseRow(records[i], i + 1, latestAllowedMs);
     if ('event' in result) {
       events.push(result.event);
     } else {

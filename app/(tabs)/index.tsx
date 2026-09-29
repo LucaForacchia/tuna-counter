@@ -1,7 +1,7 @@
 import * as Haptics from 'expo-haptics';
 import { router, useFocusEffect } from 'expo-router';
-import { useCallback, useMemo, useState } from 'react';
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Animated, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useEvents } from '@/db/useEvents';
@@ -45,6 +45,7 @@ function FirstRunSetup({ onDone }: { onDone: (initialCount: number) => void }) {
             setValue(Number.isInteger(parsed) ? parsed : 0);
           }}
           keyboardType="numeric"
+          maxFontSizeMultiplier={1.2}
           style={[styles.quantityInput, { borderColor: colors.ink, color: colors.ink, fontFamily: fontFamilies.displayExtraBold }]}
         />
         <Pressable
@@ -68,10 +69,24 @@ export default function PantryScreen() {
   const insets = useSafeAreaInsets();
   const { events, isLoaded, addEvent, removeEvent, refresh } = useEvents();
   const [pendingUndo, setPendingUndo] = useState<string | null>(null);
+  const [pulse] = useState(() => new Animated.Value(1));
+  const [shownCount, setShownCount] = useState<number | null>(null);
 
   useFocusEffect(useCallback(() => refresh(), [refresh]));
 
   const count = currentCount(events);
+
+  // A short "bump" of the lid whenever the count changes (not on first render).
+  useEffect(() => {
+    if (shownCount !== null && shownCount !== count) {
+      Animated.sequence([
+        Animated.timing(pulse, { toValue: 1.05, duration: 100, useNativeDriver: true }),
+        Animated.timing(pulse, { toValue: 1, duration: 160, useNativeDriver: true }),
+      ]).start();
+    }
+    setShownCount(count);
+  }, [count, shownCount, pulse]);
+
   const lastEvent = useMemo(() => replay(events).at(-1), [events]);
 
   const finishSetup = useCallback(
@@ -120,13 +135,20 @@ export default function PantryScreen() {
       </View>
 
       <View style={styles.content}>
-        <View style={[styles.lidOuter, { backgroundColor: colors.lidOuter }]}>
+        <Animated.View style={[styles.lidOuter, { backgroundColor: colors.lidOuter, transform: [{ scale: pulse }] }]}>
           <View style={[styles.lidInner, { backgroundColor: colors.surface, borderColor: colors.lidRim }]}>
             <View style={[styles.pullTab, { backgroundColor: colors.lidRim }]} />
-            <Text style={[styles.count, { color: colors.ink, fontFamily: fontFamilies.displayExtraBold }]}>{count}</Text>
+            <Text
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              maxFontSizeMultiplier={1.1}
+              style={[styles.count, { color: colors.ink, fontFamily: fontFamilies.displayExtraBold }]}
+            >
+              {count}
+            </Text>
             <Text style={[styles.cansLabel, { color: colors.inkMuted, fontFamily: fontFamilies.bodySemiBold }]}>cans</Text>
           </View>
-        </View>
+        </Animated.View>
 
         <View style={styles.buttonRow}>
           <Pressable
@@ -224,6 +246,8 @@ const styles = StyleSheet.create({
     marginBottom: 14,
   },
   count: {
+    // 4+ digits would overflow the lid at 104sp; adjustsFontSizeToFit shrinks them to this width
+    maxWidth: 200,
     fontSize: 104,
     lineHeight: 104,
     letterSpacing: -4,

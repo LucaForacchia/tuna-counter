@@ -112,6 +112,23 @@ describe('parseEventsCsv edge cases', () => {
     expect(headerError).toContain('unrecognized header');
     expect(events).toEqual([]);
   });
+
+  it('rejects events dated in the future as bad rows, tolerating a few minutes of clock skew', () => {
+    const now = new Date('2026-01-10T12:00:00Z');
+    const csv = [
+      CSV_HEADER,
+      'a,2026-01-10T11:00:00Z,2026-01-10T11:00:00Z,delta,-1,',
+      'b,2026-01-10T12:03:00Z,2026-01-10T12:03:00Z,delta,-1,',
+      'c,2026-01-10T13:00:00Z,2026-01-10T13:00:00Z,delta,-1,',
+      'd,2027-01-01T00:00:00Z,2027-01-01T00:00:00Z,delta,-1,',
+    ].join('\n');
+
+    const { events, rowErrors } = parseEventsCsv(csv, now);
+
+    expect(events.map((e) => e.id)).toEqual(['a', 'b']);
+    expect(rowErrors.map((e) => e.line)).toEqual([4, 5]);
+    expect(rowErrors[0].reason).toContain('in the future');
+  });
 });
 
 describe('backupFileName', () => {

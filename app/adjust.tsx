@@ -101,6 +101,7 @@ export default function AdjustScreen() {
             accessibilityRole="radio"
             accessibilityState={{ checked: mode === m }}
             onPress={() => setMode(m)}
+            hitSlop={{ top: 2, bottom: 2 }}
             style={[styles.segmentedOption, mode === m && { backgroundColor: colors.ink }]}
           >
             <Text
@@ -129,6 +130,7 @@ export default function AdjustScreen() {
             value={String(quantity)}
             onChangeText={setQuantityFromText}
             keyboardType="numeric"
+            maxFontSizeMultiplier={1.2}
             style={[styles.quantityInput, { borderColor: colors.ink, color: colors.ink, fontFamily: fontFamilies.displayExtraBold }]}
           />
           <Pressable

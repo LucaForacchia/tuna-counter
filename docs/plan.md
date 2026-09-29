@@ -4,12 +4,13 @@ Passi piccoli, uno per sessione. Ogni passo è "fatto" solo quando passano
 `npx tsc --noEmit` e `npx jest`, e quando indicato è stato provato sul telefono
 con Expo Go.
 
-**Stato attuale**: passi 0-9 fatti e testati sul telefono. Il passo 10
-(i18n) è **in standby** per decisione dell'utente: l'app resta solo in
-inglese, con le stringhe scritte direttamente nei componenti. Prossimo passo
-attivo: **11** (Rifinitura). Esiste anche un pulsante "DEV · Load demo data"
-(solo `__DEV__`, schermata Backup). Nulla di pendente nel repo: tutto su
-`master`, nessun remote.
+**Stato attuale**: passi 0-9 fatti e testati sul telefono; passo 10 (i18n)
+in standby (solo inglese); passo 11 (Rifinitura) implementato, **in attesa
+di conferma sul telefono**. Prossimo: 12 (build APK di prova). Esiste anche
+un pulsante "DEV · Load demo data" (solo `__DEV__`, schermata Backup).
+Prima di pubblicare vanno compilati `PRIVACY_POLICY_URL` e `CONTACT_EMAIL`
+in `src/config/about.ts` (le righe restano nascoste finché sono `null`).
+Nulla di pendente nel repo: tutto su `master`, nessun remote.
 
 ## 0. Setup progetto — FATTO
 Progetto Expo (SDK 57, TypeScript strict, Expo Router) creato, `app.json`
@@ -185,7 +186,7 @@ visive comuni prima di costruire qualunque schermata.
   cambia lingua senza riavvio manuale del testo (o al riavvio dell'app,
   da verificare in pratica).
 
-## 11. Rifinitura
+## 11. Rifinitura — implementato, da confermare sul telefono
 - Tema chiaro/scuro automatico (con la palette scura decisa al passo 4),
   font a cifre fisse per il numero verificato senza clipping sotto
   ridimensionamento del font di sistema, animazione leggera al cambio.

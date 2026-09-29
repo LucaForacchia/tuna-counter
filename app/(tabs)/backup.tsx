@@ -1,4 +1,5 @@
 import Constants from 'expo-constants';
+import { router } from 'expo-router';
 import { useCallback, useState } from 'react';
 import { Alert, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -198,9 +199,11 @@ export default function BackupScreen() {
         {__DEV__ && <DevDemoDataButton />}
       </View>
 
-      <Text style={[styles.about, { color: colors.inkMuted, fontFamily: fontFamilies.bodyRegular }]}>
-        Tuna Counter · com.ibob_42.tunacounter{version ? ` · v${version}` : ''}
-      </Text>
+      <Pressable accessibilityRole="link" onPress={() => router.push('/about')} style={styles.aboutLink}>
+        <Text style={[styles.about, { color: colors.inkMuted, fontFamily: fontFamilies.bodyRegular }]}>
+          About · Tuna Counter{version ? ` v${version}` : ''}
+        </Text>
+      </Pressable>
     </ScrollView>
   );
 }
@@ -226,5 +229,6 @@ const styles = StyleSheet.create({
   dangerBlock: { alignItems: 'center', gap: 12, paddingTop: 8 },
   resetButton: { minHeight: 48, paddingHorizontal: 20, alignItems: 'center', justifyContent: 'center' },
   resetLabel: { fontSize: 15 },
-  about: { fontSize: 12, textAlign: 'center' },
+  aboutLink: { minHeight: 48, alignItems: 'center', justifyContent: 'center' },
+  about: { fontSize: 13, textAlign: 'center', textDecorationLine: 'underline' },
 });
