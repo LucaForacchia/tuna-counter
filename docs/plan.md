@@ -4,13 +4,14 @@ Passi piccoli, uno per sessione. Ogni passo è "fatto" solo quando passano
 `npx tsc --noEmit` e `npx jest`, e quando indicato è stato provato sul telefono
 con Expo Go.
 
-**Stato attuale**: passi 0-9 fatti e testati sul telefono; passo 10 (i18n)
-in standby (solo inglese); passo 11 (Rifinitura) fatto e confermato sul telefono.
-Prossimo: 12 (build APK di prova). Esiste anche
-un pulsante "DEV · Load demo data" (solo `__DEV__`, schermata Backup).
-Prima di pubblicare vanno compilati `PRIVACY_POLICY_URL` e `CONTACT_EMAIL`
-in `src/config/about.ts` (le righe restano nascoste finché sono `null`).
-Nulla di pendente nel repo: tutto su `master`, nessun remote.
+**Stato attuale**: passi 0-9, 11 e 12 fatti; passo 10 (i18n) in standby
+(solo inglese). Primo APK `preview` buildato con EAS e installato sul telefono
+(profilo in `eas.json`, keystore custodita da EAS, icone da `design/icons/`).
+Prossimo: checklist di `docs/play-store.md` (prima di pubblicare compilare
+`PRIVACY_POLICY_URL` e `CONTACT_EMAIL` in `src/config/about.ts`, fare un
+backup della keystore con `eas credentials`, incrementare `versionCode` a ogni
+build caricata su Play). Esiste anche un pulsante "DEV · Load demo data" (solo
+`__DEV__`). Nulla di pendente nel repo: tutto su `master`, nessun remote.
 
 ## 0. Setup progetto — FATTO
 Progetto Expo (SDK 57, TypeScript strict, Expo Router) creato, `app.json`
@@ -205,7 +206,7 @@ visive comuni prima di costruire qualunque schermata.
   il titolo di History finisce sotto la barra in basso. Configurazione
   estrema, deciso di non gestirla. Se servisse: rendere la Home scrollabile.
 
-## 12. Build APK di prova
+## 12. Build APK di prova — FATTO
 - Configurazione profilo EAS `preview`, build cloud con EAS Build (piano
   gratuito), incremento `android.versionCode`.
 - Installazione dell'APK generato sul proprio telefono (fuori da Expo Go).
