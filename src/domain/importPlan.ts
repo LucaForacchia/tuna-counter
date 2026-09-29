@@ -54,14 +54,20 @@ export function planImport(existing: readonly DomainEvent[], parsed: ParseCsvRes
   };
 }
 
-/** One-line result for the alert shown after an import, e.g. "32 events imported, 3 already present, 1 invalid row (line 17)". */
+const MAX_LISTED_ROW_ERRORS = 3;
+
+/**
+ * Text for the alert shown after an import, e.g.
+ * "32 events imported, 3 already present, 1 invalid row skipped" followed by one
+ * "Line 17: expected 6 columns, got 2" per bad row (first few only).
+ */
 export function formatImportSummary({ imported, alreadyPresent, invalidRows }: ImportSummary): string {
   const parts = [`${imported} ${imported === 1 ? 'event' : 'events'} imported`];
   if (alreadyPresent > 0) parts.push(`${alreadyPresent} already present`);
-  if (invalidRows.length > 0) {
-    const lines = invalidRows.slice(0, 3).map((row) => row.line).join(', ');
-    const more = invalidRows.length > 3 ? '…' : '';
-    parts.push(`${invalidRows.length} invalid ${invalidRows.length === 1 ? 'row' : 'rows'} (${invalidRows.length === 1 ? 'line' : 'lines'} ${lines}${more})`);
-  }
-  return parts.join(', ');
+  if (invalidRows.length > 0) parts.push(`${invalidRows.length} invalid ${invalidRows.length === 1 ? 'row' : 'rows'} skipped`);
+
+  const details = invalidRows.slice(0, MAX_LISTED_ROW_ERRORS).map((row) => `Line ${row.line}: ${row.reason}`);
+  if (invalidRows.length > MAX_LISTED_ROW_ERRORS) details.push(`…and ${invalidRows.length - MAX_LISTED_ROW_ERRORS} more`);
+
+  return [parts.join(', '), ...details].join('\n');
 }

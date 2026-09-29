@@ -42,11 +42,12 @@ export function deleteEvent(db: Database, id: string): void {
   db.runSync('DELETE FROM events WHERE id = ?', [id]);
 }
 
-/** Atomically swaps the whole log for `events` (dev seeding; the future CSV import can reuse it). */
+/** Atomically swaps the whole log for `events` (import "Replace", reset, dev seeding). */
 export function replaceAllEvents(db: Database, events: readonly DomainEvent[]): void {
+  // One transaction only: SQLite has no nested transactions, so don't call insertEvents() from in here.
   db.withTransactionSync(() => {
     db.runSync('DELETE FROM events');
-    insertEvents(db, events);
+    for (const event of events) insertEvent(db, event);
   });
 }
 

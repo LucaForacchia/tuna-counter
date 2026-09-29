@@ -68,9 +68,9 @@ describe('planImport', () => {
 });
 
 describe('formatImportSummary', () => {
-  it('matches the spec example wording', () => {
-    expect(formatImportSummary({ imported: 32, alreadyPresent: 3, invalidRows: [{ line: 17, reason: 'x' }] })).toBe(
-      '32 events imported, 3 already present, 1 invalid row (line 17)'
+  it('lists the counts and the reason for each invalid row', () => {
+    expect(formatImportSummary({ imported: 32, alreadyPresent: 3, invalidRows: [{ line: 17, reason: 'expected 6 columns, got 2' }] })).toBe(
+      '32 events imported, 3 already present, 1 invalid row skipped\nLine 17: expected 6 columns, got 2'
     );
   });
 
@@ -78,8 +78,10 @@ describe('formatImportSummary', () => {
     expect(formatImportSummary({ imported: 1, alreadyPresent: 0, invalidRows: [] })).toBe('1 event imported');
   });
 
-  it('truncates a long list of bad lines', () => {
-    const invalidRows = [2, 3, 4, 5].map((line) => ({ line, reason: 'x' }));
-    expect(formatImportSummary({ imported: 0, alreadyPresent: 0, invalidRows })).toBe('0 events imported, 4 invalid rows (lines 2, 3, 4…)');
+  it('truncates a long list of bad rows', () => {
+    const invalidRows = [2, 3, 4, 5].map((line) => ({ line, reason: 'invalid type "x"' }));
+    expect(formatImportSummary({ imported: 0, alreadyPresent: 0, invalidRows })).toBe(
+      '0 events imported, 4 invalid rows skipped\nLine 2: invalid type "x"\nLine 3: invalid type "x"\nLine 4: invalid type "x"\n…and 1 more'
+    );
   });
 });

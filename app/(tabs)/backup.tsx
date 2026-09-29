@@ -87,8 +87,9 @@ export default function BackupScreen() {
       try {
         if (mode === 'replace') replaceEvents(plan.eventsToWrite);
         else addEvents(plan.eventsToWrite);
-      } catch {
-        Alert.alert("Couldn't import", 'The database refused the write. Nothing was changed.');
+      } catch (error) {
+        const reason = error instanceof Error ? error.message : String(error);
+        Alert.alert("Couldn't import", `The database refused the write, nothing was changed.\n\n${reason}`);
         return;
       }
       Alert.alert('Import complete', formatImportSummary(plan.summary));
