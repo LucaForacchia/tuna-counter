@@ -24,7 +24,9 @@ export type PickedBackup = { name: string; text: string } | { tooLarge: true } |
 export async function pickBackupFile(): Promise<PickedBackup> {
   // Android often reports CSVs as octet-stream or plain text, so filtering by MIME type would hide valid files;
   // the CSV parser rejects anything that isn't a Tuna Counter backup.
-  const result = await DocumentPicker.getDocumentAsync({ type: '*/*', copyToCacheDirectory: true });
+  // No cache copy: in Expo Go the copy lands in a folder expo-file-system isn't allowed to read ("Missing READ
+  // permission"), whereas the picker's content:// URI is readable directly.
+  const result = await DocumentPicker.getDocumentAsync({ type: '*/*', copyToCacheDirectory: false });
   if (result.canceled) return null;
 
   const asset = result.assets[0];
