@@ -41,3 +41,11 @@ export function listEvents(db: Database): DomainEvent[] {
 export function deleteEvent(db: Database, id: string): void {
   db.runSync('DELETE FROM events WHERE id = ?', [id]);
 }
+
+/** Atomically swaps the whole log for `events` (dev seeding; the future CSV import can reuse it). */
+export function replaceAllEvents(db: Database, events: readonly DomainEvent[]): void {
+  db.withTransactionSync(() => {
+    db.runSync('DELETE FROM events');
+    for (const event of events) insertEvent(db, event);
+  });
+}
