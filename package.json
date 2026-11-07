@@ -1,7 +1,7 @@
 {
   "name": "tunacounter",
   "main": "expo-router/entry",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "dependencies": {
     "@react-native-community/datetimepicker": "9.2.1",
     "@react-native/metro-config": "^0.88.1",

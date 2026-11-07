@@ -11,7 +11,7 @@ Prossimo: checklist di `docs/play-store.md` (prima di pubblicare compilare
 `PRIVACY_POLICY_URL` e `CONTACT_EMAIL` in `src/config/about.ts`, fare un
 backup della keystore con `eas credentials`, incrementare `versionCode` a ogni
 build caricata su Play). Esiste anche un pulsante "DEV · Load demo data" (solo
-`__DEV__`). Nulla di pendente nel repo: tutto su `master`, pushato su `origin`.
+`__DEV__`). Branch: si lavora su `develop`, `master` riceve solo i rilasci via PR, ognuno con tag `vX.Y.Z` (vedi CLAUDE.md). Ultimo rilascio: **v1.1.0** (versionCode 2).
 
 **Aggiornamento a SDK 58** (novembre 2026, dopo il passo 12: Expo Go sul
 telefono supporta solo SDK 58). React Native 0.88, target API Android 36.
