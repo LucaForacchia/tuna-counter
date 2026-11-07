@@ -19,14 +19,14 @@ import { spacing } from '@/ui/tokens';
 
 const CHART_HEIGHT = 150;
 
-type Period = '30d' | '1y' | 'all';
-const PERIODS: Period[] = ['30d', '1y', 'all'];
-const PERIOD_LABELS: Record<Period, string> = { '30d': '30 days', '1y': '1 year', all: 'All' };
+type Period = '90d' | '1y' | 'all';
+const PERIODS: Period[] = ['90d', '1y', 'all'];
+const PERIOD_LABELS: Record<Period, string> = { '90d': '90 days', '1y': '1 year', all: 'All' };
 
 /** `null` means "all time" — see src/domain/series.ts's buildCountSeries. */
 function periodStart(period: Period, now: Date): Date | null {
   if (period === 'all') return null;
-  if (period === '30d') return new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+  if (period === '90d') return new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
   const start = new Date(now);
   start.setFullYear(start.getFullYear() - 1);
   return start;
@@ -95,7 +95,7 @@ export default function HistoryScreen() {
   const insets = useSafeAreaInsets();
   const { width: windowWidth } = useWindowDimensions();
   const { events, removeEvent, refresh } = useEvents();
-  const [period, setPeriod] = useState<Period>('30d');
+  const [period, setPeriod] = useState<Period>('90d');
 
   useFocusEffect(useCallback(() => refresh(), [refresh]));
 

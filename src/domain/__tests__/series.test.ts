@@ -58,13 +58,12 @@ describe('buildCountSeries', () => {
     const series = buildCountSeries(events, start, now);
 
     expect(series).toEqual([
-      { at: start.toISOString(), value: 0 },
       { at: '2026-01-02T10:00:00.000Z', value: 3 },
       { at: now.toISOString(), value: 3 },
     ]);
   });
 
-  it('treats "all time" (start=null) as starting at 0 right before the first event', () => {
+  it('starts "all time" (start=null) at the first event\'s resulting value, not at 0', () => {
     const events: DomainEvent[] = [
       event({ id: '1', occurredAt: '2025-06-01T10:00:00.000Z', type: 'set', value: 4 }),
       event({ id: '2', occurredAt: '2025-12-01T10:00:00.000Z', type: 'delta', value: 6 }),
@@ -73,10 +72,48 @@ describe('buildCountSeries', () => {
     const series = buildCountSeries(events, null, now);
 
     expect(series).toEqual([
-      { at: '2025-06-01T10:00:00.000Z', value: 0 },
       { at: '2025-06-01T10:00:00.000Z', value: 4 },
       { at: '2025-12-01T10:00:00.000Z', value: 10 },
       { at: now.toISOString(), value: 10 },
+    ]);
+    expect(Math.min(...series.map((p) => p.value))).toBe(4);
+  });
+
+  it('clamps a window starting before the first event to "all time"', () => {
+    const events: DomainEvent[] = [
+      event({ id: '1', occurredAt: '2026-01-03T10:00:00.000Z', type: 'set', value: 9 }),
+      event({ id: '2', occurredAt: '2026-01-06T10:00:00.000Z', type: 'delta', value: -2 }),
+    ];
+    const ninetyDaysAgo = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
+
+    const windowed = buildCountSeries(events, ninetyDaysAgo, now);
+
+    expect(windowed).toEqual(buildCountSeries(events, null, now));
+    expect(windowed[0]).toEqual({ at: '2026-01-03T10:00:00.000Z', value: 9 });
+  });
+
+  it('starts from the first event\'s value when several events share its timestamp', () => {
+    const events: DomainEvent[] = [
+      event({ id: 'a', occurredAt: '2026-01-03T10:00:00.000Z', recordedAt: '2026-01-03T10:00:00.000Z', type: 'set', value: 9 }),
+      event({ id: 'b', occurredAt: '2026-01-03T10:00:00.000Z', recordedAt: '2026-01-03T10:05:00.000Z', type: 'delta', value: -1 }),
+    ];
+
+    expect(buildCountSeries(events, null, now)).toEqual([
+      { at: '2026-01-03T10:00:00.000Z', value: 8 },
+      { at: now.toISOString(), value: 8 },
+    ]);
+  });
+
+  it('uses the value after an event that falls exactly on the window start', () => {
+    const events: DomainEvent[] = [
+      event({ id: '1', occurredAt: '2025-12-01T10:00:00.000Z', type: 'set', value: 5 }),
+      event({ id: '2', occurredAt: '2026-01-01T00:00:00.000Z', type: 'delta', value: 3 }),
+    ];
+    const start = new Date('2026-01-01T00:00:00.000Z');
+
+    expect(buildCountSeries(events, start, now)).toEqual([
+      { at: start.toISOString(), value: 8 },
+      { at: now.toISOString(), value: 8 },
     ]);
   });
 

@@ -64,13 +64,18 @@ Ogni evento nel log mostra anche il **valore risultante** dopo di esso.
 ### 3.3 Storico
 Due viste, con un selettore in alto:
 - **Grafico**: grafico a gradini (step line) del conteggio nel tempo.
-  Intervalli: 30 giorni / 1 anno / tutto (come nei mockup/screenshot; niente
-  "7 giorni", deciso con l'utente al passo 8).
-  Costruzione della serie per un intervallo `[inizio, adesso]`: il valore a
-  `inizio` è l'ultimo totale risultante prima di `inizio` (0 se non esiste);
-  poi uno scalino per ogni evento dentro l'intervallo, fino ad "adesso" con
-  il conteggio corrente. Minimo e massimo dell'asse si calcolano su questa
-  serie, incluso il valore iniziale.
+  Intervalli: 90 giorni / 1 anno / tutto (i mockup mostrano 30 giorni; portato
+  a 90 dopo un mese d'uso perché 30 giorni dicevano poco. Niente "7 giorni",
+  deciso con l'utente al passo 8).
+  Costruzione della serie per un intervallo `[inizio, adesso]`: il tracciamento
+  comincia col primo evento, quindi `inizio` non va mai prima di esso (se
+  l'intervallo è più lungo dello storico, il grafico coincide con "tutto"). Il
+  valore a `inizio` è il totale risultante dell'ultimo evento in o prima di
+  `inizio` — mai uno 0 inventato per il periodo non tracciato; poi uno scalino
+  per ogni evento successivo dentro l'intervallo, fino ad "adesso" con il
+  conteggio corrente. Minimo e massimo dell'asse si calcolano su questa serie,
+  incluso il valore iniziale (quindi l'asse y include lo 0 solo se il
+  conteggio è davvero sceso a 0).
 - **Log**: lista in ordine cronologico inverso. Ogni riga: data/ora, variazione
   ("−1", "+6", "= 9"), valore risultante, nota. Eventi inseriti nel passato
   hanno un piccolo indicatore. Swipe o tocco lungo → elimina (con conferma).

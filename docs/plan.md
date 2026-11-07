@@ -159,6 +159,10 @@ visive comuni prima di costruire qualunque schermata.
 - **Fatto quando**: sul telefono il grafico riflette gli eventi del log per
   ciascun intervallo, e l'aspetto rispecchia la parte "grafico" di
   `design/screenshots/03-history.png`.
+- **Ritocco dopo un mese d'uso**: "30 giorni" diventato "90 giorni"; la serie
+  non parte mai prima del primo evento né da uno 0 inventato, così l'asse y
+  non include lo 0 se il conteggio non ci è mai sceso, e un intervallo più
+  lungo dello storico tracciato coincide con "Tutto" (`docs/spec.md` §3.3).
 
 ## 9. Impostazioni — Export/Import CSV ("Backup") — FATTO
 - Esporta CSV: usa la logica del passo 2, salva con `expo-file-system` e
