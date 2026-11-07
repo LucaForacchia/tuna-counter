@@ -15,7 +15,7 @@ Stato: pubblicazione prevista nel **medio termine**. Nel frattempo l'app si usa 
 
 ## Build
 - [ ] Android App Bundle (**AAB**) generato con EAS Build (profilo `production`).
-- [ ] Target API conforme: da agosto 2026, API 36 (Android 16) per le nuove app.
+- [ ] Target API conforme: da agosto 2026, API 36 (Android 16) per le nuove app. SDK 58 (React Native 0.88) produce `targetSdk` 36: verificato a novembre 2026, ricontrollare sull'AAB finale.
 - [ ] Play App Signing attivo. EAS gestisce la chiave di upload: **non perderla** e annota dove sta.
 - [ ] `versionCode` incrementato a ogni caricamento.
 

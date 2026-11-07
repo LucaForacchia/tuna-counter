@@ -13,7 +13,7 @@ export async function exportBackup(events: readonly DomainEvent[]): Promise<void
 
   const file = new File(Paths.cache, backupFileName());
   file.create({ overwrite: true });
-  file.write(serializeEventsToCsv(events));
+  await file.write(serializeEventsToCsv(events));
 
   await Sharing.shareAsync(file.uri, { mimeType: 'text/csv', dialogTitle: 'Save Tuna Counter backup' });
 }

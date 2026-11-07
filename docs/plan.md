@@ -13,6 +13,12 @@ backup della keystore con `eas credentials`, incrementare `versionCode` a ogni
 build caricata su Play). Esiste anche un pulsante "DEV · Load demo data" (solo
 `__DEV__`). Nulla di pendente nel repo: tutto su `master`, pushato su `origin`.
 
+**Aggiornamento a SDK 58** (novembre 2026, dopo il passo 12: Expo Go sul
+telefono supporta solo SDK 58). React Native 0.88, target API Android 36.
+`.npmrc` con `legacy-peer-deps=true` per un conflitto npm su una peer opzionale
+di `datetimepicker` (spiegato nel file). L'APK `preview` installato è ancora
+SDK 57: va rifatto con EAS prima di sostituirlo.
+
 ## 0. Setup progetto — FATTO
 Progetto Expo (SDK 57, TypeScript strict, Expo Router) creato, `app.json`
 configurato, Jest con test banale, primo commit.
