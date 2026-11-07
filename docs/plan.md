@@ -11,7 +11,7 @@ Prossimo: checklist di `docs/play-store.md` (prima di pubblicare compilare
 `PRIVACY_POLICY_URL` e `CONTACT_EMAIL` in `src/config/about.ts`, fare un
 backup della keystore con `eas credentials`, incrementare `versionCode` a ogni
 build caricata su Play). Esiste anche un pulsante "DEV · Load demo data" (solo
-`__DEV__`). Nulla di pendente nel repo: tutto su `master`, nessun remote.
+`__DEV__`). Nulla di pendente nel repo: tutto su `master`, pushato su `origin`.
 
 ## 0. Setup progetto — FATTO
 Progetto Expo (SDK 57, TypeScript strict, Expo Router) creato, `app.json`
