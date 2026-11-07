@@ -57,3 +57,11 @@ app/        # schermate (Expo Router)
 - Non aggiungere dipendenze non elencate sopra senza chiedere.
 - Fai commit piccoli e descrittivi dopo ogni passo funzionante.
 - Alla fine di ogni passo, dimmi esattamente cosa provare sul telefono.
+
+## Branch, rilasci e tag
+- **Mai lavorare direttamente su `master`**: `master` contiene solo versioni rilasciate.
+- Lo sviluppo avviene su `develop` (o su un branch per passo creato da `develop` e unito di nuovo in `develop`). Le prove sul telefono si fanno dal branch di lavoro, senza toccare `master`.
+- **La PR verso `master` si apre solo per un rilascio** (`develop` → `master`), mai per un singolo passo.
+- Prima del rilascio si aggiorna `version` in `app.json` (e in `package.json`), seguendo il versionamento semantico (`MAJOR.MINOR.PATCH`), e si incrementa `android.versionCode`.
+- **Dopo ogni rilascio si crea il tag della versione su GitHub** (`vX.Y.Z`, uguale a `version`) sul commit di merge in `master`, con una release che riassume le modifiche.
+- Push, PR, merge e tag si fanno solo con l'ok di Luca.
